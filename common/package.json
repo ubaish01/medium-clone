@@ -1,0 +1,17 @@
+{
+  "name": "@ubaish/common-app",
+  "version": "1.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "dependencies": {
+    "typescript": "^5.4.3",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

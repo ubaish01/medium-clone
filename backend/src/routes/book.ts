@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client/edge';
 import { withAccelerate } from '@prisma/extension-accelerate';
 import { Hono } from 'hono';
 import { verify } from 'hono/jwt'
-
+import { createBlogInput, updateBlogInput } from '@ubaish/common-app'
 
 type Variables = {
     userId: string,
@@ -60,6 +60,15 @@ bookRouter.post('/', async (c) => {
         datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
     const body = await c.req.json();
+
+    const {success} = createBlogInput.safeParse(body);
+    if (!success) {
+        return c.json({
+            success: true,
+            message: "Input not valid"
+        })
+    }
+
     const newPost = await prisma.post.create({
         data: {
             title: body.title,
@@ -86,6 +95,15 @@ bookRouter.put('/', async (c) => {
     const body = await c.req.json();
     const prisma = c.get("prisma");
     const userId = c.get("userId");
+
+    const {success} = updateBlogInput.safeParse(body);
+    if (!success) {
+        return c.json({
+            success: true,
+            message: "Input not valid"
+        })
+    }
+
     const updatedPost = await prisma.post.update({
         where: {
             id: body.id,
